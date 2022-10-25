@@ -1,0 +1,27 @@
+{
+  "name": "AIPipeline",
+  "version": "1.0.0-SNAPSHOT",
+  "description": "FabOS AI Pipeline",
+  "main": "index.js",
+  "authors": {
+    "name": "Christoph Hennebold",
+    "email": "christoph.hennebold@ipa.fraunhofer.de"
+  },
+  "repository": "https://github.com/FabOS-AI/fabos-base-service-ai-pipeline",
+  "scripts": {
+    "dev": "vuepress dev --temp .temp",
+    "build": "vuepress build",
+    "start": "nodemon --ext md,vue --watch .vuepress --watch . --exec vuepress dev"
+  },
+  "license": "Apache 2.0",
+  "devDependencies": {
+    "@dovyp/vuepress-plugin-clipboard-copy": "^1.0.0-alpha.7",
+    "@vuepress/plugin-medium-zoom": "^1.9.7",
+    "axios": "^0.21.0",
+    "vuepress": "^1.9.7",
+    "vuepress-plugin-global-variables": "^0.2.0"
+  },
+  "dependencies": {
+    "vuetify": "^2.6.9"
+  }
+}
