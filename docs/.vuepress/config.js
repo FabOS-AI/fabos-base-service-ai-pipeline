@@ -29,6 +29,9 @@ module.exports = {
                   collapsable: true,
                   children: [
                     'usage/',
+                    'usage/pre-processing',
+                    'usage/ai-toolbox',
+                    'usage/evaluation'
                   ],
                 },
               ]
