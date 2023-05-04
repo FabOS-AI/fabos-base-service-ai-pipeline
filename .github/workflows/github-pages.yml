@@ -16,7 +16,7 @@ jobs:
         run: |
           cd docs
           yarn install
-          yarn dev
+          yarn docs:build
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@3.7.1
         with:
