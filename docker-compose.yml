@@ -1,0 +1,31 @@
+version: '3'
+services:
+  pre_processing:
+    build: ./01_PreProcessing
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/code
+
+  toolbox:
+    build: ./02_AI_Toolbox
+    ports:
+      - "5001:5001"
+    volumes:
+      - .:/code
+    
+  xai:
+    build: ./03_xAI
+    ports:
+      - "5003:5003"
+    volumes:
+      - .:/code
+
+  evaluation:
+    build: ./04_Evaluation
+    ports:
+      - "5002:5002"
+    volumes:
+      - .:/code
+    
+  

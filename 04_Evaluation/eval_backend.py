@@ -17,11 +17,11 @@ def evaluate(filename, X_test, y_test, metric):
     """
 
     # Unpack tensorflow model
-    shutil.unpack_archive(filename= filename + ".zip", extract_dir="test_model")
+    shutil.unpack_archive(filename = filename + ".zip", extract_dir="test_model")
 
     # load keras model
     model = keras.models.load_model('test_model', custom_objects=ak.CUSTOM_OBJECTS)
-
+    print('load model')
     # Load evaluation data
     results = model.evaluate(x = X_test, y = y_test, return_dict=True)
 

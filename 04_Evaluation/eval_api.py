@@ -46,7 +46,7 @@ def evaluate_model():
     zipped_model = request.files['model'].read()
     with open(filename + ".zip", 'wb') as s:
         s.write(zipped_model)
-
+        
     #Evaluate model and return loss
     result = eval.evaluate(filename, X_test, y_test, metric)
 

@@ -36,12 +36,12 @@ if __name__ == "__main__":
     # 6. IPA <-> IPT Extraction Pipeline
 
     uc_tests = uct.UseCaseTests()
-    uc_tests.dataframe_preprocessing()
+    # uc_tests.dataframe_preprocessing()
     # uc_tests.ai_toolbox_modelling()
     # uc_tests.xai_service_tests()
     # uc_tests.evaluation_service_single_model()
     # uc_tests.evaluation_service_model_benchmark()
-
+    uc_tests.xai_test()
 
 
 

@@ -26,17 +26,13 @@ class UseCaseTests:
 
         # Explainable AI
         self.xAI_SERVER_IP = "127.0.0.1"
-        self.xAI_PORT = 5004
-
-        # Transfer Learning
-        self.tl_SERVER_IP = "127.0.0.1"
-        self.tl_PORT = 5005
+        self.xAI_PORT = 5003
 
 
         # Testdaten WZ_Verschleiss.csv
         self.col_names = ["VB","smcAC","smcDC","vib_table","vib_spindle","AE_table","AE_spindle"]
         self.target = "VB"
-        self.df = pd.read_csv(r"04_SourceCode\Base Services\06_Test_Framework\tests\tests\WZ_Verschleiss.csv",
+        self.df = pd.read_csv("../fabos-base-service-ai-pipeline/06_Test_Framework/tests/tests/WZ_Verschleiss.csv",
                             header = None,
                             names = self.col_names,
                             skiprows=1,
@@ -427,30 +423,44 @@ class UseCaseTests:
         pass
 
 
-    def transfer_learning_test(self):
+    def xai_test(self):
         # Which columns to process
         col = ["smcAC", "smcDC", "vib_table", "vib_spindle", "AE_table", "AE_spindle"]
-        target = "VB"
 
         # Set parameters
-        my_param = {"target": target}
+        my_param = {"col": col}
 
-        ### DATA IN PANDAS DF ###
+        # Call preprocessing service - remove nan values
         files = {
             'data': ("data", self.df.to_json(), 'application/json')
         }
+
         r = requests.post('http://{0}:{1}/nan'.format(self.pp_SERVER_IP, self.pp_PORT), params=my_param, files=files)
         df_json = r.json()
         resp_df = pd.DataFrame.from_dict(df_json)
         print(resp_df.head(1))
 
+        tmp_df = resp_df
+        y = tmp_df[self.target].values
+        X = tmp_df.drop(self.target, axis=1).values
+
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=self.test_size, random_state = 42) 
+
+        X_test_lists = X_test.tolist()
+        y_test_lists = y_test.tolist()
+
+        X_test_json_str = json.dumps(X_test_lists)
+        y_test_json_str = json.dumps(y_test_lists)
         files = {
-            'data': ("data", resp_df.to_json(), 'application/json'),
+            'X_test': ("X_test", X_test_json_str, 'application/json'),
+            'y_test': ("y_test", y_test_json_str, 'application/json'),
             'model': (self.model_name, open(self.model_name + ".zip", 'rb'), 'application/octet-stream'),
+            'model_2': ("use_case_test_model_2", open("use_case_test_model_2.zip", 'rb'), 'application/octet-stream')
         }
 
-        r = requests.post('http://{0}:{1}/transfer-learning'.format(self.tb_SERVER_IP, self.tb_PORT), params=my_param, files=files)
-        print(r)
+        r = requests.post('http://{0}:{1}/surrogate'.format(self.xAI_SERVER_IP, self.xAI_PORT), params=my_param, files=files)
+        resp = r.json()
+        print(resp)
 
 
         # TODO
