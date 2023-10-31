@@ -55,11 +55,11 @@ def automl_df(df, target, automl_param, my_epochs, trials, loss, metrics, test_s
     model_name = ""
 
     if automl_param == 'reg': # Regression model
-        model = ak.StructuredDataRegressor(overwrite=True, loss = loss, metrics=metrics, max_trials=trials)
+        model = ak.StructuredDataRegressor(overwrite=True, loss = loss, metrics=metrics, max_trials=trials, directory='.\Models')
         model.fit(X_train, y_train, epochs=my_epochs)
 
     elif automl_param == "clf": # Classification model
-        model = ak.StructuredDataClassifier(overwrite=True, max_trials=1)
+        model = ak.StructuredDataClassifier(overwrite=True, max_trials=1, directory='.\Models')
         model.fit(X_train, y_train, epochs=my_epochs)
 
         # Evaluate the best model with test data
@@ -80,11 +80,11 @@ def automl_tts(X_train, y_train, automl_param, my_epochs, trials, loss, metrics)
     model_name = ""
 
     if automl_param == 'reg': # Regression model
-        model = ak.StructuredDataRegressor(overwrite=True, loss = loss, metrics=metrics, max_trials=trials)
+        model = ak.StructuredDataRegressor(overwrite=True, loss = loss, metrics=metrics, max_trials=trials, directory='.\Models')
         model.fit(X_train, y_train, epochs=my_epochs)
 
     elif automl_param == "clf": # Classification model
-        model = ak.StructuredDataClassifier(overwrite=True, max_trials=1)
+        model = ak.StructuredDataClassifier(overwrite=True, max_trials=1, directory='.\Models')
         model.fit(X_train, y_train, epochs=my_epochs)
 
         # Evaluate the best model with test data
